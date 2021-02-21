@@ -124,9 +124,8 @@ wire va01 = a[15:14] == 2'b01;
 wire va11 = a[15:14] == 2'b11 && (ramPage == 3'd5 || ramPage == 3'd7);
 
 wire we1 = !(!mreq && !wr && (va01 || va11) && !a[13]);
-//wire[13:0] a1 = { vduPage, !rfsh && a[15:14] == 2'b01 ? { va[12:7], a[6:0] } : va };
 wire[13:0] a1 = { va11 ? ramPage[1] : 1'b0, a[12:0] };
-wire[13:0] a2 = { vduPage, va };
+wire[13:0] a2 = { vduPage, !rfsh && a[15:14] == 2'b01 ? { va[12:7], a[6:0] } : va };
 
 dpr #(.AW(14)) Dpr
 (
